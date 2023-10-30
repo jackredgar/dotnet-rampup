@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "AveM6dUI6J/rOy/y/0J+RMsecyvlQoPBBfhB/viBWdI=",
+  "Source": "dotnet-rampup",
+  "BasePath": "_content/dotnet-rampup",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
