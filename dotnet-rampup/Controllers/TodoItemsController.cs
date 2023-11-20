@@ -22,18 +22,27 @@ namespace dotnet_rampup.Controllers
 
         // GET: api/TodoItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems([FromQuery(Name = "ShowCompleted")] bool ShowCompleted = true)
         {
           if (_context.TodoItems == null)
           {
               return NotFound();
           }
-            return await _context.TodoItems.ToListAsync();
+
+          if (!ShowCompleted)
+            {
+                return await _context.TodoItems.Where(n => !n.IsComplete).ToListAsync();
+            }
+          else
+            {
+                return await _context.TodoItems.ToListAsync();
+            }
+            
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
+        public async Task<ActionResult<TodoItem>> GetTodoItem(Guid id)
         {
           if (_context.TodoItems == null)
           {
@@ -52,12 +61,12 @@ namespace dotnet_rampup.Controllers
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
+        public async Task<IActionResult> PutTodoItem(Guid id, TodoCreate todoCreate)
         {
-            if (id != todoItem.Id)
-            {
-                return BadRequest();
-            }
+            TodoItem todoItem = new TodoItem();
+            todoItem.Id = id;
+            todoItem.Name = todoCreate.Name;
+            todoItem.IsComplete = todoCreate.IsComplete;
 
             _context.Entry(todoItem).State = EntityState.Modified;
 
@@ -83,18 +92,23 @@ namespace dotnet_rampup.Controllers
         // POST: api/TodoItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoCreate todoCreate)
         {
+            TodoItem todoItem = new TodoItem();
+            todoItem.Name = todoCreate.Name;
+            todoItem.IsComplete = todoCreate.IsComplete;
+            // todoItem.Id = Guid.NewGuid();
+
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 
             //    return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
-            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
+            return CreatedAtAction(nameof(GetTodoItem), new { id = Guid.NewGuid() }, todoItem);
         }
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(long id)
+        public async Task<IActionResult> DeleteTodoItem(Guid id)
         {
             if (_context.TodoItems == null)
             {
@@ -112,7 +126,7 @@ namespace dotnet_rampup.Controllers
             return NoContent();
         }
 
-        private bool TodoItemExists(long id)
+        private bool TodoItemExists(Guid id)
         {
             return (_context.TodoItems?.Any(e => e.Id == id)).GetValueOrDefault();
         }
