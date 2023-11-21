@@ -1,0 +1,45 @@
+﻿@page "/completed"
+@using BlazorApp.Data
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject IHttpClientFactory ClientFactory
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<div>
+    <h1>Completed Todo Items</h1>
+    <button @onclick='() => ViewUncompleted()'>Back</button>
+    
+</div>
+
+@if (todos is null)
+{
+    <p>Unable to get todo items from API. Please try again later.</p>
+}
+else
+{
+    <ul>
+        @foreach (var todo in todos)
+        {
+            <li style="cursor: pointer;"
+            @onclick='() => Navigation.NavigateTo("/todo/"+ todo.Id)'>
+                @todo.Name
+                <button>Complete</button>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private TodoItem[] todos = Array.Empty<TodoItem>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await Http.GetFromJsonAsync<TodoItem[]>("https://localhost:7197/api/TodoItems?showCompleted=true");
+    }
+
+    private void ViewUncompleted()
+    {
+        Navigation.NavigateTo("/");
+    }
+}

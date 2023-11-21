@@ -6,7 +6,13 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<h3>TodoItem</h3>
+<div>
+    <h3>TodoItem</h3>
+    @if (item != null)
+    {
+        <button @onclick='() => Delete()'>Delete</button>
+    }
+</div>
 
 @if (item is null)
 {
@@ -40,6 +46,12 @@ else
     private async void Submit()
     {
         await Http.PutAsJsonAsync<TodoItem>("https://localhost:7197/api/TodoItems/" + id, item);
+        Cancel();
+    }
+
+    private async void Delete()
+    {
+        await Http.DeleteFromJsonAsync<TodoItem>("https://localhost:7197/api/TodoItems/" + id);
         Cancel();
     }
 
