@@ -29,7 +29,7 @@ else
              >
 
                 <div @onclick='() => Navigation.NavigateTo("/todo/"+ todo.Id)'>@todo.Name</div>
-                <button>Complete</button>
+                <button @onclick='() => CompleteTodo(todo)'>Complete</button>
             </li>
         }
     </ul>
@@ -41,10 +41,19 @@ else
     protected override async Task OnInitializedAsync()
     {
         todos = await Http.GetFromJsonAsync<TodoItem[]>("https://localhost:7197/api/TodoItems?showCompleted=false");
+
     }
 
     private void ViewCompleted()
     {
         Navigation.NavigateTo("/completed");
+    }
+
+    private async void CompleteTodo(TodoItem item)
+    {
+        TodoItem newItem = item;
+        newItem.IsComplete = true;
+        await Http.PutAsJsonAsync<TodoItem>("https://localhost:7197/api/TodoItems/" + newItem.Id, newItem);
+        StateHasChanged();
     }
 }
