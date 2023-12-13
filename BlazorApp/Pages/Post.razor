@@ -12,7 +12,7 @@
     <label>Name</label>
     <InputText @bind-Value="item.Name" />
     <button @onclick='() => Cancel()'>Cancel</button>
-    <button type="submit">Submit</button>
+    <button type="submit" @onkeypress='() => Console.WriteLine("hello")'>Submit</button>
 </form>
 
 @code {
@@ -21,6 +21,15 @@
             Name = "",
             IsComplete = false
     };
+
+    protected bool IsDisabled = true;
+
+    private void OnType()
+    {
+        Console.WriteLine(item.Name.Length);
+        bool val = item.Name.Length == 0 ? false : true;
+        IsDisabled = val;
+    }
 
     private async void Submit()
     {

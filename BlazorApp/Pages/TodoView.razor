@@ -8,10 +8,7 @@
 
 <div>
     <h3>TodoItem</h3>
-    @if (item != null)
-    {
-        <button @onclick='() => Delete()'>Delete</button>
-    }
+    
 </div>
 
 @if (item is null)
@@ -20,10 +17,19 @@
 }
 else
 {
-    <form method="put" @onsubmit="Submit">
+    <form class="edit-form" method="put" @onsubmit="Submit">
         <InputText @bind-Value=@item.Name />
-        <button @onclick='() => Cancel()'>Cancel</button>
-        <button type="submit">Submit</button>
+        <div class="edit-form-buttons">
+            <button @onclick='() => Cancel()'>Cancel</button>
+            <button type="submit">Submit</button>
+            
+        </div>
+        <div class="edit-form-delete">
+            @if (item != null)
+            {
+                <button @onclick='() => Delete()'>Delete</button>
+            }
+        </div>
     </form>
 }
 

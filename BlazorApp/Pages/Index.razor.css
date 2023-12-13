@@ -1,0 +1,21 @@
+﻿.button-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.todo-list {
+    margin-top: 16px;
+}
+
+.todo-item {
+    padding: 12px;
+}
+
+.todo-item-inner {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    cursor: pointer;
+    max-width: 25%;
+}
