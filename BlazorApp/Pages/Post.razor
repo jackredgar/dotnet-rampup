@@ -6,13 +6,20 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<h3>Create a Todo Item</h3>
+<div class="header">
+    <h1>Create a Todo Item</h1>
+</div>
 
-<form method="post" @onsubmit="Submit">
-    <label>Name</label>
-    <InputText @bind-Value="item.Name" />
-    <button @onclick='() => Cancel()'>Cancel</button>
-    <button type="submit" @onkeypress='() => Console.WriteLine("hello")'>Submit</button>
+<form class="post-form" method="post" @onsubmit="Submit">
+    <div class="input-container">
+        <label>Name</label>
+        <InputText @bind-Value="item.Name" />
+    </div>
+    <div class="post-form-buttons">
+        <button type="button" @onclick='() => Cancel()'>Cancel</button>
+        <button type="submit">Submit</button>
+    </div>
+    
 </form>
 
 @code {
@@ -21,15 +28,6 @@
             Name = "",
             IsComplete = false
     };
-
-    protected bool IsDisabled = true;
-
-    private void OnType()
-    {
-        Console.WriteLine(item.Name.Length);
-        bool val = item.Name.Length == 0 ? false : true;
-        IsDisabled = val;
-    }
 
     private async void Submit()
     {

@@ -6,7 +6,7 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<div>
+<div class="header">
     <h1>Todo Items</h1>
     <div class="button-controls">
         @if (todos != null)
@@ -23,20 +23,21 @@
 }
 else
 {
-    <ul class="todo-list">
+    <div class="todo-list">
         @foreach (var todo in todos)
         {
-            <li 
+            <div 
                 class="todo-item"
-             >
-                <div class="todo-item-inner">
-                    <div @onclick='() => Navigation.NavigateTo("/todo/"+ todo.Id)'>@todo.Name</div>
-                    <button @onclick='() => CompleteTodo(todo)'>Complete</button>
+                 
+            >
+                <div @onclick='() => Navigation.NavigateTo("/todo/"+ todo.Id)' class="todo-item-inner">
+                    <div>@todo.Name</div>
                 </div>
+                <button @onclick='() => CompleteTodo(todo)' @onclick:preventDefault="true">Complete</button>
                 
-            </li>
+            </div>
         }
-    </ul>
+    </div>
 }
 
 @code {

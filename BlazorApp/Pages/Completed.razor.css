@@ -1,20 +1,51 @@
-﻿.button-controls {
+﻿.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    padding: 8px;
+    border-radius: 15px;
+}
+
+.button-controls {
     display: flex;
     flex-direction: row;
     gap: 8px;
 }
 
 .todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
     margin-top: 16px;
+    width: 100%;
+    overflow: auto;
 }
 
 .todo-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     padding: 12px;
+    background-color: lightcyan;
+    flex: 1 0 0;
+    width: 25%;
 }
 
 .todo-item-inner {
     display: flex;
-    flex-direction: row;
-    gap: 16px;
-    max-width: 25%;
+    justify-content: center;
+    flex: 1 0 0;
+}
+
+button {
+    border-radius: 10px;
+    background-color: lightgrey;
+    border: none;
 }

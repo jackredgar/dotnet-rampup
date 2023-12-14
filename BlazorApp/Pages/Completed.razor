@@ -6,7 +6,7 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<div>
+<div class="header">
     <h1>Completed Todo Items</h1>
     <div class="button-controls">
         <button @onclick='() => ViewUncompleted()'>Back</button>
@@ -19,16 +19,16 @@
 }
 else
 {
-    <ul class="todo-list">
+    <div class="todo-list">
         @foreach (var todo in todos)
         {
-            <li class="todo-item">
+            <div class="todo-item">
                 <div class="todo-item-inner">
                     @todo.Name
                 </div>
-            </li>
+            </div>
         }
-    </ul>
+    </div>
 }
 
 @code {

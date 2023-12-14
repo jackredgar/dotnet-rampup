@@ -6,8 +6,8 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<div>
-    <h3>TodoItem</h3>
+<div class="header">
+    <h1>TodoItem</h1>
     
 </div>
 
@@ -18,18 +18,21 @@
 else
 {
     <form class="edit-form" method="put" @onsubmit="Submit">
-        <InputText @bind-Value=@item.Name />
+        <div class="input-container">
+            <InputText @bind-Value=@item.Name />
+            <div class="edit-form-delete">
+                @if (item != null)
+                {
+                    <button @onclick='() => Delete()'>Delete</button>
+                }
+            </div>
+        </div>
         <div class="edit-form-buttons">
             <button @onclick='() => Cancel()'>Cancel</button>
-            <button type="submit">Submit</button>
+            <button type="submit">Update</button>
             
         </div>
-        <div class="edit-form-delete">
-            @if (item != null)
-            {
-                <button @onclick='() => Delete()'>Delete</button>
-            }
-        </div>
+        
     </form>
 }
 
