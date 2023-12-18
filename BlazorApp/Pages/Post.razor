@@ -13,11 +13,11 @@
 <form class="post-form" method="post" @onsubmit="Submit">
     <div class="input-container">
         <label>Name</label>
-        <InputText @bind-Value="item.Name" />
+        <input @onchange="@onChange" />
     </div>
     <div class="post-form-buttons">
         <button type="button" @onclick='() => Cancel()'>Cancel</button>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled="@isDisabled">Submit</button>
     </div>
     
 </form>
@@ -29,10 +29,19 @@
             IsComplete = false
     };
 
+    private bool isDisabled = true;
+
     private async void Submit()
     {
         await Http.PostAsJsonAsync<TodoItem>("https://localhost:7197/api/TodoItems/", item);
         Cancel();
+    }
+
+    private void onChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        item.Name = (string)args.Value;
+        isDisabled = item.Name == "" ? true : false;
+        StateHasChanged();
     }
 
     private void Cancel()

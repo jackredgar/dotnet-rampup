@@ -31,7 +31,7 @@ else
                  
             >
                 <div @onclick='() => Navigation.NavigateTo("/todo/"+ todo.Id)' class="todo-item-inner">
-                    <div>@todo.Name</div>
+                    <div class="todo-item-text">@todo.Name</div>
                 </div>
                 <button @onclick='() => CompleteTodo(todo)' @onclick:preventDefault="true">Complete</button>
                 

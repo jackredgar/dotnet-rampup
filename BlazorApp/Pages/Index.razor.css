@@ -34,7 +34,8 @@ h1 {
     padding: 12px;
     background-color: lightcyan;
     flex: 1 0 0;
-    width: 25%;    
+    width: 25%;
+    gap: 8px;
 }
 
 .todo-item-inner {
@@ -44,6 +45,17 @@ h1 {
     flex: 1 0 0;
 }
 
+.todo-item-text {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    word-break: break-word
+}
+
+.todo-item-inner:hover .todo-item-text {
+    border-radius: 8px;
+    background-color: lightgrey;
+}
 button {
     border-radius: 10px;
     background-color: lightgrey;
