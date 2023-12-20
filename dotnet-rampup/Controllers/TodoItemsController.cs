@@ -40,6 +40,30 @@ namespace dotnet_rampup.Controllers
             
         }
 
+        [HttpGet("completed")]
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetCompletedTodoItems()
+        {
+            if (_context.TodoItems == null)
+            {
+                return NotFound();
+            }
+
+            return await _context.TodoItems.Where(n => n.IsComplete).ToListAsync();
+
+        }
+
+        [HttpGet("uncompleted")]
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetUncompletedTodoItems()
+        {
+            if (_context.TodoItems == null)
+            {
+                return NotFound();
+            }
+
+            return await _context.TodoItems.Where(n => !n.IsComplete).ToListAsync();
+
+        }
+
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(Guid id)
@@ -86,7 +110,7 @@ namespace dotnet_rampup.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/TodoItems
@@ -123,7 +147,7 @@ namespace dotnet_rampup.Controllers
             _context.TodoItems.Remove(todoItem);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool TodoItemExists(Guid id)
