@@ -13,7 +13,8 @@
 <form class="post-form" method="post" @onsubmit="Submit">
     <div class="input-container">
         <label>Name</label>
-        <input @onchange="@onChange" />
+        <input input value="@item.Name"
+               @oninput="(e)=> {item.Name = e.Value.ToString(); if (string.IsNullOrEmpty(e.Value.ToString())) {isDisabled = true;} else {isDisabled=false;};}" />
     </div>
     <div class="post-form-buttons">
         <button type="button" @onclick='() => Cancel()'>Cancel</button>
@@ -37,12 +38,12 @@
         Cancel();
     }
 
-    private void onChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-    {
-        item.Name = (string)args.Value;
-        isDisabled = item.Name == "" ? true : false;
-        StateHasChanged();
-    }
+    // private void onChange(System.Windows.Forms.KeyEventArgs args)
+    // {
+    //     item.Name = (string)args.Value;
+    //     isDisabled = item.Name == "" ? true : false;
+    //     StateHasChanged();
+    // }
 
     private void Cancel()
     {
